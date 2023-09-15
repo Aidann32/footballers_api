@@ -25,6 +25,8 @@ SECRET_KEY = 'django-insecure-l0%_m*!9*2aspt1h^yvd1q&b1+(#xpwl!0w1du20lwc$=kzxru
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+AUTH_USER_MODEL = 'users.User'
+
 ALLOWED_HOSTS = []
 
 
@@ -48,7 +50,8 @@ INSTALLED_APPS = [
     'constance.backends.database',
     'ckeditor',
 
-    'apps.users'
+    'apps.users',
+    'apps.footballers'
 ]
 
 MIDDLEWARE = [
