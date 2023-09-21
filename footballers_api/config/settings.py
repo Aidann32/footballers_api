@@ -11,9 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+STATIC_DIR = BASE_DIR.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -51,7 +53,8 @@ INSTALLED_APPS = [
     'ckeditor',
 
     'apps.users',
-    'apps.footballers'
+    'apps.footballers',
+    'apps.news',
 ]
 
 MIDDLEWARE = [
@@ -134,6 +137,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = '/media/'
+
+STATIC_ROOT = os.path.join(STATIC_DIR, 'static/')
+MEDIA_ROOT = os.path.join(STATIC_DIR, 'media/')
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -154,3 +165,14 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
 }
 
+CONSTANCE_ADDITIONAL_FIELDS = {
+    'language_select': ['django.forms.fields.ChoiceField', {
+        'widget': 'django.forms.Select',
+        'choices': (("EN", "English"), ("KZ", "Kazakh"))
+    }],
+}
+
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_CONFIG = {
+    'LANGUAGE': ('EN', 'Select language', 'language_select'),
+}

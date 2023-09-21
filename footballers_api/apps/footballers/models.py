@@ -1,6 +1,8 @@
 from django.db import models
 
-from core.models import BaseModel
+from ckeditor.fields import RichTextField
+
+from core.models import BaseModel, BaseImage
 
 
 class Country(BaseModel):
@@ -35,6 +37,7 @@ class Footballer(BaseModel):
     last_name = models.CharField(max_length=255, verbose_name='Фамилия', null=False, blank=False)
     club = models.ForeignKey(FootballClub, on_delete=models.RESTRICT, verbose_name='Клуб')
     shirt_number = models.PositiveSmallIntegerField(default=0, verbose_name='Игровой номер')
+    bio = RichTextField(default='', null=True, blank=True)
     date_of_birth = models.DateField(verbose_name='Дата рождения', blank=False, null=False)
 
     class Meta:
@@ -43,4 +46,8 @@ class Footballer(BaseModel):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+
+
+class FootballerImage(BaseImage):
+    footballer = models.ForeignKey(Footballer, on_delete=models.RESTRICT, null=True, blank=True)
 

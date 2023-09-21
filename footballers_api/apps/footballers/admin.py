@@ -1,6 +1,10 @@
 from django.contrib import admin
 
-from .models import Country, FootballClub, Footballer
+from .models import Country, FootballClub, Footballer, FootballerImage
+
+
+class FootballerImageInline(admin.TabularInline):
+    model = FootballerImage
 
 
 @admin.register(Country)
@@ -15,5 +19,5 @@ class FootballClubAdmin(admin.ModelAdmin):
 
 @admin.register(Footballer)
 class FootballerAdmin(admin.ModelAdmin):
-    pass
+    inlines = [FootballerImageInline,]
 
